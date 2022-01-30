@@ -17,16 +17,16 @@ int main(void) {
     exit(1);
   }
 
-  // Set options
+  // Set URL and User-Agent
   curl_easy_setopt(curl, CURLOPT_URL,
                    "https://api.met.no/weatherapi/locationforecast/2.0/"
                    "compact?lat=59.220535&lon=10.934701");
   curl_easy_setopt(curl, CURLOPT_USERAGENT, "Dark Ninja Dragon/1.0");
 
-  // Perform actions
+  // Fetch the data
   CURLcode result = curl_easy_perform(curl);
   if (result != CURLE_OK) {
-    fprintf(stderr, "Download problem: %s", curl_easy_strerror(result));
+    fprintf(stderr, "Problem fetching data: %s", curl_easy_strerror(result));
   }
 
   curl_easy_cleanup(curl);
