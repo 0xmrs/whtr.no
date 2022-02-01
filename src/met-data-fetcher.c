@@ -1,7 +1,7 @@
 /*
 
   Author: Martin R.
-  Description: Program to fetch data from the MET api and format in nicely.
+  Description: Program to fetch data from the MET api.
 
 */
 
@@ -9,7 +9,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(void) {
+/* TO-DO:
+ * - Make the function take arguments which specify the lat & lon values.
+ *
+ */
+
+int met_data_fetcher(void) {
   CURL *curl = curl_easy_init();
 
   if (!curl) {
@@ -22,6 +27,9 @@ int main(void) {
                    "https://api.met.no/weatherapi/locationforecast/2.0/"
                    "compact?lat=59.220535&lon=10.934701");
   curl_easy_setopt(curl, CURLOPT_USERAGENT, "Dark Ninja Dragon/1.0");
+
+  // Make stdout go to data.json (storing the response).
+  freopen("data.json", "w", stdout);
 
   // Fetch the data
   CURLcode result = curl_easy_perform(curl);
