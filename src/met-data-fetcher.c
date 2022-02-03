@@ -1,46 +1,14 @@
-/*
-
-  Author: Martin R.
-  Description: Program to fetch data from the MET api.
-
-*/
-
+#include "met-data-fetcher.h"
 #include <curl/curl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-int met_data_fetcher();
-float lat;
-float lon;
-
-int main(int argc, char *argv[]) {
-
-  char ch;
-  while ((ch = getopt(argc, argv, "a:b:")) != EOF) {
-    switch (ch) {
-    case 'a':
-      lat = atof(optarg);
-      break;
-    case 'b':
-      lat = atof(optarg);
-      break;
-    default:
-      fprintf(stderr, "Not a valid option: %s\n", optarg);
-    }
-  }
-  argc -= optind;
-  argv -= optind;
-
-  met_data_fetcher();
-
-  return 0;
-}
+float lon = 0;
+float lat = 0;
 
 int met_data_fetcher() {
 
-  lat = 59.220535;
-  lon = 10.934701;
   char URL[100];
 
   sprintf(URL,
