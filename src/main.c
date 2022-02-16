@@ -6,22 +6,19 @@
 */
 
 #include "met-data-fetcher.h"
+#include "url.h"
 #include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-static int verbose_flag;
-
 int main(int argc, char *argv[]) {
 
   // Get the command line arguments.
-  static struct option long_options[] = {
-      {"verbose", no_argument, &verbose_flag, 1},
-      {"brief", no_argument, &verbose_flag, 0},
-      {"lat", required_argument, 0, 'y'},
-      {"lon", required_argument, 0, 'x'},
-      {0, 0, 0, 0}};
+  static struct option long_options[] = {{"lat", required_argument, 0, 'y'},
+                                         {"lon", required_argument, 0, 'x'},
+                                         {"now", 0, 0, 'n'},
+                                         {0, 0, 0, 0}};
 
   // Option index.
   int option_index = 0;
@@ -40,6 +37,9 @@ int main(int argc, char *argv[]) {
       break;
     case 'x':
       lon = atof(optarg);
+      break;
+    case 'n':
+      typeNow = 1;
       break;
     default:
       abort();

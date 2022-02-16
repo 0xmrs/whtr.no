@@ -1,4 +1,5 @@
 #include "met-data-fetcher.h"
+#include "url.h"
 #include <curl/curl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,11 +10,7 @@ float lat = 0;
 
 int met_data_fetcher() {
 
-  char URL[100];
-
-  sprintf(URL,
-          "https://api.met.no/weatherapi/nowcast/2.0/complete?lat=%f&lon=%f",
-          lat, lon);
+  urlFormatter();
 
   CURL *curl = curl_easy_init();
 
