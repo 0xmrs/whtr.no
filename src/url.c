@@ -14,9 +14,8 @@ void urlFormatter(void) {
       "https://api.met.no/weatherapi/locationforecast/2.0/"
       "complete?lat=%f&lon=%f"};
 
-  if (typeNow) {
+  if (typeNow) 
     sprintf(URL, URLs[0], lat, lon);
-  } else {
+  else 
     sprintf(URL, URLs[1], lat, lon);
-  }
 }
