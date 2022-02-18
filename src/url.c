@@ -9,7 +9,7 @@ char URL[100];
 
 void urlFormatter(void) {
 
-  char *URLs[2] = {
+  const char *URLs[2] = {
       "https://api.met.no/weatherapi/nowcast/2.0/complete?lat=%f&lon=%f",
       "https://api.met.no/weatherapi/locationforecast/2.0/"
       "complete?lat=%f&lon=%f"};
