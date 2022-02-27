@@ -1,11 +1,15 @@
 CC=gcc
 CFLAGS=-Wall
 
-BIN=met-data
+SRC=url.c met-data-fetcher.c main.c  
+OBJS=url.o met-data-fetcher.o main.o
 
 LIB=-lcurl
 
-all:
-	$(CC) $(CFLAGS) $(LIB) url.c met-data-fetcher.c main.c -o $(BIN)
+all: met-data
+
+met-data: $(OBJS)
+	$(CC) $(LIB) $(CFLAGS) -o met-data $(OBJS)
+
 clean:
-	rm -rf $(BIN)
+	rm -rf *.o
