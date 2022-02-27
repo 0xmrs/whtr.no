@@ -12,4 +12,4 @@ met-data: $(OBJS)
 	$(CC) $(LIB) $(CFLAGS) -o met-data $(OBJS)
 
 clean:
-	rm -rf *.o
+	rm -f $(OBJS) met-data
