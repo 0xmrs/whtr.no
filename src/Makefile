@@ -1,4 +1,4 @@
-CC=gcc
+CC=clang
 CFLAGS=-Wall
 
 SRC=url.c met-data-fetcher.c main.c  
