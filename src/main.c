@@ -11,8 +11,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <signal.h>
+
+void sig_handler(int signum) {
+  remove("/tmp/MET-weather-data.json");
+}
 
 int main(int argc, char *argv[]) {
+
+  signal(SIGINT, sig_handler);
 
   // Get the command line arguments.
   static struct option long_options[] = {{"lat", required_argument, 0, 'y'},
@@ -24,7 +31,7 @@ int main(int argc, char *argv[]) {
   int option_index = 0;
 
   int c;
-  while ((c = getopt_long(argc, argv, "lat:lon:", long_options,
+  while ((c = getopt_long(argc, argv, "lat:lon:now", long_options,
                           &option_index)) != EOF) {
     switch (c) {
     case 0:
@@ -42,11 +49,13 @@ int main(int argc, char *argv[]) {
       typeNow = 1;
       break;
     default:
-      abort();
+      exit(1);
     }
   }
 
   met_data_fetcher();
+
+  //raise(SIGINT);
 
   return 0;
 }
