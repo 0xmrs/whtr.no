@@ -10,12 +10,12 @@ char URL[100];
 void urlFormatter(void) {
 
   const char *URLs[2] = {
-      "https://api.met.no/weatherapi/nowcast/2.0/complete?lat=%f&lon=%f",
       "https://api.met.no/weatherapi/locationforecast/2.0/"
-      "complete?lat=%f&lon=%f"};
+      "complete?lat=%f&lon=%f",
+      "https://api.met.no/weatherapi/nowcast/2.0/complete?lat=%f&lon=%f"};
 
-  if (typeNow) 
-    sprintf(URL, URLs[0], lat, lon);
-  else 
+  if (typeNow)
     sprintf(URL, URLs[1], lat, lon);
+  else
+    sprintf(URL, URLs[0], lat, lon);
 }

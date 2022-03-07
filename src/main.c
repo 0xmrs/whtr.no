@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
+#include "nowcast-formatter.h"
 
 void sig_handler(int signum) {
   remove("/tmp/MET-weather-data.json");
@@ -54,8 +55,9 @@ int main(int argc, char *argv[]) {
   }
 
   met_data_fetcher();
+  nowcast_formatter();
 
-  //raise(SIGINT);
+  raise(SIGINT);
 
   return 0;
 }
