@@ -1,9 +1,3 @@
-/*
-
-  Description: Program to format the JSON data fetched from the MET API.
-
- */
-
 #include <stdio.h>
 #include <json-c/json.h>
 #include <stdbool.h>
@@ -12,16 +6,15 @@ int nowcast_formatter(void) {
   FILE *fp;
   char buffer[5530];
 
-  struct json_object *json_obj, *properties_obj, *timeseries_obj, *time_obj, *data_obj, *instant_obj, *details_obj;
-
-  struct json_object *air_temperature_obj, *precipitation_rate_obj, *relative_humidity_obj, *wind_from_direction_obj, *wind_speed_obj, *wind_speed_gust_obj;
+struct json_object *json_obj, *properties_obj, *timeseries_obj, *time_obj,
+    *data_obj, *instant_obj, *details_obj, *air_temperature_obj,
+    *precipitation_rate_obj, *relative_humidity_obj, *wind_from_direction_obj,
+    *wind_speed_obj, *wind_speed_gust_obj, *next_1_hours_obj, *summary_obj, *symbol_code_obj;
 
   struct json_object *timeseries;
-  size_t n_timeseries;
+  //size_t n_timeseries;
 
-  size_t i;
-
-  int exists;
+  size_t exists;
 
   fp = fopen("/tmp/MET-weather-data.json", "r");
   if (!fp) {
@@ -44,7 +37,7 @@ int nowcast_formatter(void) {
     fprintf(stderr, "timeseries not found\n");
     return -1;
   }
-  n_timeseries = json_object_array_length(timeseries_obj);
+  //n_timeseries = json_object_array_length(timeseries_obj);
   timeseries = json_object_array_get_idx(timeseries_obj, 0);
 
   exists = json_object_object_get_ex(timeseries, "time", &time_obj);
@@ -98,8 +91,24 @@ int nowcast_formatter(void) {
     fprintf(stderr, "wind_from_direction not found\n");
     return -1;
   }
+  exists = json_object_object_get_ex(data_obj, "next_1_hours", &next_1_hours_obj);
+  if (exists==false) {
+    fprintf(stderr, "next_1_hours not found\n");
+    return -1;
+  }
+  exists = json_object_object_get_ex(next_1_hours_obj, "summary", &summary_obj);
+  if (exists==false) {
+    fprintf(stderr, "summary not found\n");
+    return -1;
+  }
+  exists = json_object_object_get_ex(summary_obj, "symbol_code", &symbol_code_obj);
+  if (exists==false) {
+    fprintf(stderr, "symbol_code not found\n");
+    return -1;
+  }
 
-  printf("\n%s\n\n", json_object_get_string(time_obj));
+  printf("%s\n", json_object_get_string(time_obj));
+  printf("\n\t%s\n\n", json_object_get_string(symbol_code_obj));
   printf("Temperature: %s⁰C\n", json_object_get_string(air_temperature_obj));
   printf("Precipitation rate: %dmm\n", json_object_get_int(precipitation_rate_obj));
   printf("Relative humidity: %.1f%%\n", json_object_get_double(relative_humidity_obj));
