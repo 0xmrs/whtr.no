@@ -7,7 +7,7 @@ int typeForecast = 1;
 
 char URL[100];
 
-void urlFormatter(void) {
+void url_formatter(void) {
 
   const char *URLs[2] = {
       "https://api.met.no/weatherapi/locationforecast/2.0/"

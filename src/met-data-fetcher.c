@@ -11,7 +11,7 @@ float lat = 0;
 
 int met_data_fetcher() {
 
-  urlFormatter();
+  url_formatter();
 
   CURL *curl = curl_easy_init();
 
