@@ -12,4 +12,4 @@ met-data: $(OBJS)
 	$(CC) $(LIB) $(CFLAGS) -o met-data $(OBJS)
 
 clean:
-	rm -f $(OBJS) data.json met-data
+	rm -f $(OBJS) met-data
