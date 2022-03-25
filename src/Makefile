@@ -6,10 +6,12 @@ OBJS=url.o met-data-fetcher.o main.o nowcast-formatter.o locationforecast-format
 
 LIB=-lcurl -ljson-c -lm
 
-all: met-data
+BIN=whtr.no
 
-met-data: $(OBJS)
-	$(CC) $(LIB) $(CFLAGS) -o met-data $(OBJS)
+all: $(BIN)
+
+whtr.no: $(OBJS)
+	$(CC) $(LIB) $(CFLAGS) $(OBJS) -o $(BIN) 
 
 clean:
-	rm -f $(OBJS) met-data
+	rm -f $(OBJS) $(BIN)
