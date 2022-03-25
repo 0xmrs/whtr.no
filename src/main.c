@@ -15,11 +15,12 @@
 #include "nowcast-formatter.h"
 #include "locationforecast-formatter.h"
 
+
 void sig_handler(int signum) {
-  remove("/tmp/MET-weather-data.json");
+  remove(TMPFILE);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char **argv) {
 
   signal(SIGINT, sig_handler);
 
@@ -54,6 +55,7 @@ int main(int argc, char *argv[]) {
       exit(1);
     }
   }
+
 
   met_data_fetcher();
   if (typeNow)

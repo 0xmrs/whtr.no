@@ -10,8 +10,7 @@ char URL[100];
 void url_formatter(void) {
 
   const char *URLs[2] = {
-      "https://api.met.no/weatherapi/locationforecast/2.0/"
-      "complete?lat=%f&lon=%f",
+      "https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=%f&lon=%f",
       "https://api.met.no/weatherapi/nowcast/2.0/complete?lat=%f&lon=%f"};
 
   if (typeNow)
