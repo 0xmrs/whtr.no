@@ -1,17 +1,22 @@
 CC=clang
 CFLAGS=-Wall
 
-SRC=url.c met-data-fetcher.c main.c  nowcast-formatter.c locationforecast-formatter.c degrees-to-compass-diretions.c
-OBJS=url.o met-data-fetcher.o main.o nowcast-formatter.o locationforecast-formatter.o degrees-to-compass-diretions.o
+DEPEND=url.h met-data-fetcher.h nowcast-formatter.h locationforecast-formatter.h degrees-to-compass-diretions.h
 
 LIB=-lcurl -ljson-c -lm
 
-BIN=whtr.no
+OBJDIR=./obj
 
-all: $(BIN)
+_OBJ=url.o met-data-fetcher.o main.o nowcast-formatter.o locationforecast-formatter.o degrees-to-compass-diretions.o
+OBJ=$(patsubst %,$(OBJDIR)/%,$(_OBJ))
 
-whtr.no: $(OBJS)
-	$(CC) $(LIB) $(CFLAGS) $(OBJS) -o $(BIN) 
+$(OBJDIR)/%.o: %.c $(DEPEND)
+	$(CC) $(CFLAGS) $< -c -o $@
+
+whtr.no: $(OBJ)
+	$(CC) $(LIB) $(CFLAGS) $^ -o $@
+
+.PHONY: clean
 
 clean:
-	rm -f $(OBJS) $(BIN)
+	rm -f $(OBJDIR)/*.o
