@@ -111,26 +111,24 @@ int locationforecast_formatter(void) {
 			return -1;
 		}
 
-		printf(
-			"\n%s\n", json_object_get_string(time_obj)
+		/* Timestamp*/
+		printf("Updated: %s\n\n", json_object_get_string(time_obj));
+		/* Symbol code */
+		printf("\t%s\n", json_object_get_string(symbol_code_obj));
+		/* Temperature */
+		printf("\t%s ⁰C\n", json_object_get_string(air_temperature_obj));
+		/* Wind direction */
+		printf("\t%s ", degrees_to_compass_directions(
+					json_object_get_double(wind_from_direction_obj)
+				)
 		);
-		printf(
-			"%s\n", json_object_get_string(symbol_code_obj)
+		/* Wind speed and gust */
+		printf("%.1f(%.1f) m/s\n", json_object_get_double(wind_speed_obj), 
+					   json_object_get_double(wind_speed_gust_obj)
 		);
-		printf(
-			"%s ⁰C\n", json_object_get_string(air_temperature_obj)
-		);
-		printf(
-			"%s ", degrees_to_compass_directions(
-			       json_object_get_double(wind_from_direction_obj))
-		);
-		printf(
-			"%.1f(%.1f) m/s\n", json_object_get_double(wind_speed_obj), 
-				            json_object_get_double(wind_speed_gust_obj)
-		);
-		printf(
-			"%.1f mm\n", json_object_get_double(precipitation_amount_obj)
-		);
+		/* Percipitation amount */
+		printf("\t%.1f mm\n", json_object_get_double(precipitation_amount_obj));
 	}
+
 	return 0;
 }

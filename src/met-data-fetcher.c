@@ -20,23 +20,23 @@ int met_data_fetcher() {
 		exit(1);
 	}
 
-	// Set URL and User-Agent
+	/* Set URL and User-Agent */
 	curl_easy_setopt(curl, CURLOPT_URL, URL);
 	curl_easy_setopt(curl, CURLOPT_USERAGENT, "whtr.no/1.0");
 
-	// Send stdout to file
+	/* Send stdout to file */
 	int fd = dup(STDOUT_FILENO);
 	if (!freopen(TMPFILE, "w", stdout))
 		fprintf(stderr, "Error: %d", errno);
 
-	// Fetch the data
+	/* Fetch the data */
 	CURLcode result = curl_easy_perform(curl);
 	if (result != CURLE_OK)
 		fprintf(stderr, "%s\n", curl_easy_strerror(result));
 
 	curl_easy_cleanup(curl);
 
-	// Restore stdout.
+	/* Restore stdout. */
 	fflush(stdout);
 	close(STDOUT_FILENO);
 	dup2(fd, STDOUT_FILENO);
