@@ -1,4 +1,4 @@
-CC=clang
+CC=cc
 CFLAGS=-Wall --std=c17
 
 DEPEND=url.h met-data-fetcher.h nowcast-formatter.h locationforecast-formatter.h degrees-to-compass-diretions.h
