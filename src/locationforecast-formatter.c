@@ -150,5 +150,6 @@ int locationforecast_formatter(void) {
 		printf("\t%.1f mm\n", json_object_get_double(precipitation_amount_obj));
 	}
 
+	free(buffer);
 	return 0;
 }
