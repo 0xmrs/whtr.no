@@ -10,7 +10,7 @@ char *degrees_to_compass_directions(double wind_direction) {
 	};
 
 	index = (int)wind_direction % 360;
-	index = round(index / 22.5)+1;
+	index = round(index / 22.5);
 
 	return compass_sectors[index];
 }
