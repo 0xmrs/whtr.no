@@ -3,10 +3,14 @@
 #include <stdbool.h>
 #include "degrees-to-compass-diretions.h"
 #include "met-data-fetcher.h"
+#include "utils.h"
 
 int nowcast_formatter(void) {
-	FILE *fp;
-	char buffer[5530];
+	char *buffer = NULL;
+	if ((buffer = read_file(TMPFILE)) == NULL) {
+		fprintf(stderr, "Error reading file.\n");
+		return -1;
+	}
 
 	struct json_object *json_obj, *properties_obj, *timeseries_obj, *time_obj,
 		*data_obj, *instant_obj, *instant_details_obj,*details_obj, *air_temperature_obj,
@@ -16,15 +20,6 @@ int nowcast_formatter(void) {
 	struct json_object *timeseries;
 
 	size_t object;
-
-	fp = fopen(TMPFILE, "r");
-	if (!fp) {
-		perror("Error");
-		return -1;
-	}
-	fread(buffer, 5530, 1, fp);
-	fclose(fp);
-	fp = NULL;
 
 	json_obj = json_tokener_parse(buffer);
 
