@@ -1,7 +1,9 @@
 # TO-DO
 
-[] Integrate *locationforecast*.
+[X] Improve method of taking in and processing the data.
+
+[X] Integrate *locationforecast*.
 
 [] Create database with coordinates for cities and towns.
 
-[] Improve method of taking in and processing the data.
+[] Set up webserver to host the service.
