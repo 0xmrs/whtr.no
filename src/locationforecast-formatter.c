@@ -84,28 +84,8 @@ int locationforecast_formatter(void) {
 			}
 		}
 
-		if (i >= 49 &&  i <= 53) {
-			object = json_object_object_get_ex(data_obj, "next_1_hours", &next_1_hours_obj);
-			if (object == false) {
-					fprintf(stderr, "next_1_hours not found (%s)", json_object_get_string(time_obj));
-					return -1;
-			}
-			object = json_object_object_get_ex(next_1_hours_obj, "summary", &summary_obj);
-			if (object == false) {
-					fprintf(stderr, "summary not found (%s)\n", json_object_get_string(time_obj));
-					return -1;
-			}
-			object = json_object_object_get_ex(next_1_hours_obj, "details", &details_obj);
-			if (object==false) {
-					fprintf(stderr, "details not found (%s)\n", json_object_get_string(time_obj));
-					return -1;
-			}
-		} else if (i < 81) {
-			object = json_object_object_get_ex(data_obj, "next_6_hours", &next_6_hours_obj);
-			if (object == false) {
-					fprintf(stderr, "next_6_hours not found (%s)\n", json_object_get_string(time_obj));
-					return -1;
-			}
+		object = json_object_object_get_ex(data_obj, "next_6_hours", &next_6_hours_obj);
+		if (object != false) {
 			object = json_object_object_get_ex(next_6_hours_obj, "summary", &summary_obj);
 			if (object == false) {
 					fprintf(stderr, "summary not found (%s)\n", json_object_get_string(time_obj));
@@ -116,8 +96,18 @@ int locationforecast_formatter(void) {
 					fprintf(stderr, "details not found (%s)\n", json_object_get_string(time_obj));
 					return -1;
 			}
-		}
-
+		} else if ((object = json_object_object_get_ex(data_obj, "next_1_hours", &next_1_hours_obj)) != false) {
+			object = json_object_object_get_ex(next_1_hours_obj, "summary", &summary_obj);
+			if (object == false) {
+					fprintf(stderr, "summary not found (%s)\n", json_object_get_string(time_obj));
+					return -1;
+			}
+			object = json_object_object_get_ex(next_1_hours_obj, "details", &details_obj);
+			if (object==false) {
+					fprintf(stderr, "details not found (%s)\n", json_object_get_string(time_obj));
+					return -1;
+			}
+		} else continue;
 
 		object = json_object_object_get_ex(summary_obj, "symbol_code", &symbol_code_obj);
 		if (object == false) {
