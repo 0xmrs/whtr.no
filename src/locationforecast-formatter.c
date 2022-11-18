@@ -76,13 +76,7 @@ int locationforecast_formatter(void) {
 				return -1;
 		}
 
-		if (i <= 53 ) {
-			object = json_object_object_get_ex(instant_details_obj, "wind_speed_of_gust", &wind_speed_gust_obj);
-			if (object == false) {
-					fprintf(stderr, "wind_speed_of_gust not found (%s)\n", json_object_get_string(time_obj));
-					return -1;
-			}
-		}
+		object = json_object_object_get_ex(instant_details_obj, "wind_speed_of_gust", &wind_speed_gust_obj);
 
 		object = json_object_object_get_ex(data_obj, "next_6_hours", &next_6_hours_obj);
 		if (object != false) {
@@ -121,7 +115,8 @@ int locationforecast_formatter(void) {
 		}
 
 		/* Timestamp*/
-		printf("%s\n", json_object_get_string(time_obj));
+		struct timestamp *time = reformat_timestamp((char *)json_object_get_string(time_obj), timezone);
+		printf("%d:%d %d.%d.%d\n", time->hour, time->minute, time->day, time->month, time->year);
 		/* Symbol code */
 		printf("\t%s\n", json_object_get_string(symbol_code_obj));
 		/* Temperature */
@@ -133,7 +128,7 @@ int locationforecast_formatter(void) {
 		);
 		/* Wind speed and gust */
 		printf("%.1f ", json_object_get_double(wind_speed_obj));
-		if (i <= 53)
+		if (json_object_get_double(wind_speed_gust_obj))
 			printf("(%.1f) ", json_object_get_double(wind_speed_gust_obj));
 		printf("m/s\n");
 		/* Percipitation amount */

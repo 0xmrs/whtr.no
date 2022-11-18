@@ -9,7 +9,7 @@
 float lon = 0;
 float lat = 0;
 
-int met_data_fetcher() {
+int met_data_fetcher(void) {
 
 	url_formatter();
 

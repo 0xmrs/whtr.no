@@ -5,15 +5,16 @@
 
 */
 
-#include "met-data-fetcher.h"
-#include "url.h"
 #include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
+#include "met-data-fetcher.h"
+#include "url.h"
 #include "nowcast-formatter.h"
 #include "locationforecast-formatter.h"
+#include "utils.h"
 
 
 void sig_handler(int signum) {
@@ -24,24 +25,22 @@ int main(int argc, char **argv) {
 
 	signal(SIGINT, sig_handler);
 
-	// Get the command line arguments.
+	/* Get the command line arguments. */
 	static struct option long_options[] = {
-		{"lat", required_argument, 0, 'y'},
-		{"lon", required_argument, 0, 'x'},
-		{"now", 0, 0, 'n'},
-		{0, 0, 0, 0}
+		{"lat",      required_argument, 0, 'y'},
+		{"lon",      required_argument, 0, 'x'},
+		{"timezone", required_argument, 0, 't'},
+		{"now",      0,                 0, 'n'},
+		{0,          0,                 0,  0 }
 	};
 
-	// Option index.
-	int option_index = 0;
-
-	int c;
-	while ((c = getopt_long(argc, argv, "lat:lon:now", long_options, 
-					&option_index)) != EOF) {
+	int c, option_index = 0;
+	while ((c = getopt_long(argc, argv, "lat:lon:timezone:now", 
+				long_options, &option_index)) != EOF) {
 		switch (c) {
 			case 0:
 				if (long_options[option_index].flag != 0)
-				break;
+					break;
 				printf("option %s\n", long_options[option_index].name);
 				break;
 			case 'y':
@@ -50,17 +49,19 @@ int main(int argc, char **argv) {
 			case 'x':
 				lon = atof(optarg);
 				break;
+			case 't':
+				timezone = atoi(optarg);
+				break;
 			case 'n':
-				typeNow = 1;
+				type_now = 1;
 				break;
 			default:
 				exit(1);
 		}
 	}
 
-
 	met_data_fetcher();
-	if (typeNow)
+	if (type_now)
 		nowcast_formatter();
 	else
 		locationforecast_formatter();

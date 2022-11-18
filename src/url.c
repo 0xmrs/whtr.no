@@ -2,8 +2,8 @@
 #include "met-data-fetcher.h"
 #include <stdio.h>
 
-int typeNow = 0;
-int typeForecast = 1;
+int type_now = 0;
+int type_forecast = 1;
 
 char URL[100];
 
@@ -13,7 +13,7 @@ void url_formatter(void) {
 		"https://api.met.no/weatherapi/nowcast/2.0/complete?lat=%f&lon=%f"
 	};
 
-	if (typeNow)
+	if (type_now)
 		sprintf(URL, URLs[1], lat, lon);
 	else
 		sprintf(URL, URLs[0], lat, lon);

@@ -104,13 +104,14 @@ int nowcast_formatter(void) {
 
 
 	/* Timestamp*/
-	printf("Updated: %s\n\n", json_object_get_string(time_obj));
+	struct timestamp *time = reformat_timestamp((char *)json_object_get_string(time_obj), timezone);
+	printf("%d:%d %d.%d.%d\n", time->hour, time->minute, time->day, time->month, time->year);
 	/* Symbol code */
-	printf("\t%s\n", json_object_get_string(symbol_code_obj));
+	printf("%s\n", json_object_get_string(symbol_code_obj));
 	/* Temperature */
-	printf("\t%s ⁰C\n", json_object_get_string(air_temperature_obj));
+	printf("%s ⁰C\n", json_object_get_string(air_temperature_obj));
 	/* Wind direction */
-	printf("\t%s ", degrees_to_compass_directions(
+	printf("%s ", degrees_to_compass_directions(
 				json_object_get_double(wind_from_direction_obj)
 			)
 	);
@@ -119,7 +120,7 @@ int nowcast_formatter(void) {
 				   json_object_get_double(wind_speed_gust_obj)
 	);
 	/* Percipitation amount */
-	printf("\t%.1f mm\n", json_object_get_double(precipitation_amount_obj));
+	printf("%.1f mm\n", json_object_get_double(precipitation_amount_obj));
 
 	free(buffer);
 	return 0;
