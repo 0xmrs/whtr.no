@@ -120,7 +120,7 @@ int locationforecast_formatter(void) {
 		/* Symbol code */
 		printf("\t%s\n", json_object_get_string(symbol_code_obj));
 		/* Temperature */
-			 printf("\t%s ⁰C\n", json_object_get_string(air_temperature_obj));
+		printf("\t%s ⁰C\n", json_object_get_string(air_temperature_obj));
 		/* Wind direction */
 		printf("\t%s ", degrees_to_compass_directions(
 					json_object_get_double(wind_from_direction_obj)
@@ -135,6 +135,7 @@ int locationforecast_formatter(void) {
 		printf("\t%.1f mm\n", json_object_get_double(precipitation_amount_obj));
 	}
 
+	free(time);
 	free(buffer);
 	return 0;
 }

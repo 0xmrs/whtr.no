@@ -122,6 +122,7 @@ int nowcast_formatter(void) {
 	/* Percipitation amount */
 	printf("%.1f mm\n", json_object_get_double(precipitation_amount_obj));
 
+	free(time);
 	free(buffer);
 	return 0;
 }
