@@ -18,7 +18,8 @@
 
 
 void sig_handler(int signum) {
-	remove(TMPFILE);
+	if (remove(TMPFILE))
+		fprintf(stderr, "Unable to remove temporary file.\n");
 }
 
 int main(int argc, char **argv) {
