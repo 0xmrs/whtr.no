@@ -3,7 +3,8 @@
 #include <stdbool.h>
 #include "degrees-to-compass-diretions.h"
 #include "met-data-fetcher.h"
-#include "utils.h"
+#include "write-file.h"
+#include "reformat-timestamp.h"
 
 int nowcast_formatter(void) {
 	char *buffer = NULL;
@@ -104,8 +105,8 @@ int nowcast_formatter(void) {
 
 
 	/* Timestamp*/
-	struct timestamp *time = reformat_timestamp((char *)json_object_get_string(time_obj), timezone);
-	printf("%d:%d %d.%d.%d\n", time->hour, time->minute, time->day, time->month, time->year);
+	struct timestamp *timestamp = reformat_timestamp((char *)json_object_get_string(time_obj), timezone);
+	printf("%d:%d %d.%d.%d\n", timestamp->hour, timestamp->minute, timestamp->day, timestamp->month, timestamp->year);
 	/* Symbol code */
 	printf("%s\n", json_object_get_string(symbol_code_obj));
 	/* Temperature */
@@ -122,7 +123,7 @@ int nowcast_formatter(void) {
 	/* Percipitation amount */
 	printf("%.1f mm\n", json_object_get_double(precipitation_amount_obj));
 
-	free(time);
+	free(timestamp);
 	free(buffer);
 	return 0;
 }
