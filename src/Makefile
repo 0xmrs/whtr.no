@@ -4,13 +4,13 @@ CFLAGS=-Wall --std=c17
 debug: CFLAGS += -g
 debug: whtr.no
 
-DEPEND=url.h met-data-fetcher.h nowcast-formatter.h locationforecast-formatter.h degrees-to-compass-diretions.h utils.h
+DEPEND=url.h met-data-fetcher.h nowcast-formatter.h locationforecast-formatter.h degrees-to-compass-diretions.h write-file.h reformat-timestamp.h
 
 LIB=-lcurl -ljson-c -lm
 
 OBJDIR=./obj
 
-_OBJ=url.o met-data-fetcher.o main.o nowcast-formatter.o locationforecast-formatter.o degrees-to-compass-diretions.o utils.o
+_OBJ=url.o met-data-fetcher.o main.o nowcast-formatter.o locationforecast-formatter.o degrees-to-compass-diretions.o write-file.o reformat-timestamp.o
 OBJ=$(patsubst %,$(OBJDIR)/%,$(_OBJ))
 
 $(OBJDIR)/%.o: %.c $(DEPEND)
