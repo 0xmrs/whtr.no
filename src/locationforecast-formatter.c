@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include "degrees-to-compass-diretions.h"
 #include "met-data-fetcher.h"
-#include "utils.h"
+#include "write-file.h"
+#include "reformat-timestamp.h"
 
 int locationforecast_formatter(void) {
 	char *buffer = NULL;
@@ -115,8 +116,9 @@ int locationforecast_formatter(void) {
 		}
 
 		/* Timestamp*/
-		struct timestamp *time = reformat_timestamp((char *)json_object_get_string(time_obj), timezone);
-		printf("%d:%d %d.%d.%d\n", time->hour, time->minute, time->day, time->month, time->year);
+		struct timestamp *timestamp = reformat_timestamp((char *)json_object_get_string(time_obj), timezone);
+		printf("%d:%d %d.%d.%d\n", timestamp->hour, timestamp->minute, timestamp->day, timestamp->month, timestamp->year);
+		free(timestamp);
 		/* Symbol code */
 		printf("\t%s\n", json_object_get_string(symbol_code_obj));
 		/* Temperature */
@@ -135,7 +137,6 @@ int locationforecast_formatter(void) {
 		printf("\t%.1f mm\n", json_object_get_double(precipitation_amount_obj));
 	}
 
-	free(time);
 	free(buffer);
 	return 0;
 }
