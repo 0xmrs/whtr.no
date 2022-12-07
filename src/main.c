@@ -14,7 +14,7 @@
 #include "url.h"
 #include "nowcast-formatter.h"
 #include "locationforecast-formatter.h"
-#include "utils.h"
+#include "reformat-timestamp.h"
 
 
 void sig_handler(int signum) {
