@@ -1,6 +1,6 @@
 /*
 
-  Author: Martin R.
+  Author: Martin R.-S.
   Description: Program to fetch data from the MET api and format it.
 
 */
@@ -15,7 +15,6 @@
 #include "nowcast-formatter.h"
 #include "locationforecast-formatter.h"
 #include "reformat-timestamp.h"
-
 
 void sig_handler(int signum) {
 	if (remove(TMPFILE))
